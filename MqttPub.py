@@ -8,7 +8,7 @@ import xgboost
 from sklearn.neighbors import KNeighborsClassifier
 import numpy as np
 
-def send_dataframe_rows_broker(broker_address, topic, file_path, model_path):
+def send_dataframe_rows_broker(broker_address, port, topic, file_path, model_path):
     # Cargar el archivo xlsx como un DataFrame
     df = pd.read_excel(file_path)
 
@@ -17,10 +17,12 @@ def send_dataframe_rows_broker(broker_address, topic, file_path, model_path):
     model = model[1]
 
     # Crear un cliente MQTT
-    client = mqtt.Client()
+    client = mqtt.Client("Python1")
+
+    client.username_pw_set('Ivan',password = 'alpamayo') #configure user and password for MQTT broker connection
 
     # Conectar al broker MQTT
-    client.connect(broker_address)
+    client.connect(broker_address,port)
 
     # Iterar sobre las filas del DataFrame
     d = {0:'Sin Consumo', 1:'Zona 2', 2:'Zona 3', 3:'Igual' }
@@ -48,17 +50,20 @@ def send_dataframe_rows_broker(broker_address, topic, file_path, model_path):
         client.publish(topic, payload)
 
         # Esperar 1 minuto
-        time.sleep(5)
+        time.sleep(20)
 
-    # Desconectar del broker MQTT
-    #client.disconnect()
+    #Desconectar del broker MQTT
+    client.disconnect()
 
-broker_address = "test.mosquitto.org"
-topic = "ALSW/Prediccion"
-file_path = "C:/Users/ander/Desktop/UAM/Doctorado/Industria 4.0/Final/produccion.xlsx"
-model_path = "C:/Users/ander/Desktop/UAM/Doctorado/Industria 4.0/Final/Model.pkl"
+broker_address = "127.0.0.1"
+port=1883
+topic = "Prediccion"
+file_path ="./Data/produccion.xlsx"
+model_path ="./Modelo/Model.pkl"
+#file_path = "C:/Users/ander/Desktop/UAM/Doctorado/Industria 4.0/Final/produccion.xlsx"
+#model_path = "C:/Users/ander/Desktop/UAM/Doctorado/Industria 4.0/Final/Model.pkl"
 
-send_dataframe_rows_broker(broker_address, topic, file_path, model_path)
+send_dataframe_rows_broker(broker_address, port, topic, file_path, model_path)
 
 
 #client = mqtt.Client()
