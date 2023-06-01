@@ -1,0 +1,17 @@
+
+* Gráfico de torta o algo para mostrar la probabilidad de cada zona en la predicción del modelo.
+
+* Gauges y charts con las características de la muestra actual.
+
+
+csv(15% producción)--->predict.py---->MQTT_broker(Mosquitto o rabittMQ)--->Node-red.
+
+Tópicos MQTT:
+-PotAG
+-PotRG
+-Vol
+-Curr
+-PredictA
+-PredictB
+-PredictC
+-PredictD
