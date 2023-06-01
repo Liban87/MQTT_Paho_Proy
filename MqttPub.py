@@ -14,7 +14,7 @@ def send_dataframe_rows_broker(broker_address, topic, file_path, model_path):
 
     # Cargar el modelo desde el archivo .pkl
     model = joblib.load(model_path)
-    model = model[1]
+    model = model[0]
 
     # Crear un cliente MQTT
     client = mqtt.Client()
@@ -23,7 +23,7 @@ def send_dataframe_rows_broker(broker_address, topic, file_path, model_path):
     client.connect(broker_address)
 
     # Iterar sobre las filas del DataFrame
-    d = {0:'Sin Consumo', 1:'Zona 2', 2:'Zona 3', 3:'Igual' }
+    d = {0:'No Consumption', 1:'Sub metering 2', 2:'Sub metering 3', 3:'Equal' }
     
     for _, row in df.iterrows():
         # Obtener las características de la fila como una matriz NumPy
@@ -31,9 +31,8 @@ def send_dataframe_rows_broker(broker_address, topic, file_path, model_path):
 
         # Realizar la predicción con el modelo cargado
         prediction = model.predict(features)
-        ind = np.argmax(prediction)
-        prediction = d[ind]        
-        probability = model.predict_proba(features)[0] #.max()
+        prediction = d[int(prediction)]        
+        probability = model.predict_proba(features)[0]
 
         # Crear un diccionario con los resultados
         result = {
