@@ -29,7 +29,11 @@
                 "7e952261c5a5bb17",
                 "4edc3243e48adf2e",
                 "00c35496c9bfbe79",
-                "10e1436480eb6e87"
+                "10e1436480eb6e87",
+                "ab56d2d35bcd4f98",
+                "eb6e3eec520f88b2",
+                "6b8e8548f7c0835c",
+                "86b12d01319e577b"
             ]
         ]
     },
@@ -38,15 +42,15 @@
         "type": "ui_text",
         "z": "2a2cc906a03e0859",
         "group": "93b39fa4c6bc5332",
-        "order": 1,
+        "order": 2,
         "width": 0,
         "height": 0,
         "name": "",
-        "label": "text",
+        "label": "Etiqueta",
         "format": "{{msg.payload.prediction}}",
         "layout": "row-spread",
         "className": "",
-        "x": 490,
+        "x": 500,
         "y": 60,
         "wires": []
     },
@@ -72,10 +76,10 @@
         "z": "2a2cc906a03e0859",
         "name": "",
         "group": "93b39fa4c6bc5332",
-        "order": 2,
-        "width": 0,
-        "height": 0,
-        "label": "chart",
+        "order": 3,
+        "width": 7,
+        "height": 4,
+        "label": "Probabilidad",
         "chartType": "pie",
         "legend": "true",
         "xformat": "HH:mm:ss",
@@ -104,7 +108,7 @@
         "outputs": 1,
         "useDifferentColor": false,
         "className": "",
-        "x": 490,
+        "x": 510,
         "y": 160,
         "wires": [
             []
@@ -115,7 +119,7 @@
         "type": "function",
         "z": "2a2cc906a03e0859",
         "name": "equal",
-        "func": "msg.payload = msg.payload.probability[0]\nmsg.topic = \"Equal\"\nreturn msg;",
+        "func": "msg.payload = msg.payload.probability[0]\nmsg.topic = \"Sin\"\nreturn msg;",
         "outputs": 1,
         "noerr": 0,
         "initialize": "",
@@ -134,7 +138,7 @@
         "type": "function",
         "z": "2a2cc906a03e0859",
         "name": "function 2",
-        "func": "msg.payload = msg.payload.probability[1]\nmsg.topic = \"A>B\"\nreturn msg;",
+        "func": "msg.payload = msg.payload.probability[1]\nmsg.topic = \"Submeter 2\"\nreturn msg;",
         "outputs": 1,
         "noerr": 0,
         "initialize": "",
@@ -153,7 +157,7 @@
         "type": "function",
         "z": "2a2cc906a03e0859",
         "name": "function 3",
-        "func": "msg.payload = msg.payload.probability[2]\nmsg.topic = \"B>A\"\nreturn msg;",
+        "func": "msg.payload = msg.payload.probability[2]\nmsg.topic = \"Submeter 3\"\nreturn msg;",
         "outputs": 1,
         "noerr": 0,
         "initialize": "",
@@ -172,7 +176,7 @@
         "type": "function",
         "z": "2a2cc906a03e0859",
         "name": "function 4",
-        "func": "msg.payload = msg.payload.probability[3]\nmsg.topic = \"Sin\"\nreturn msg;",
+        "func": "msg.payload = msg.payload.probability[3]\nmsg.topic = \"Equal\"\nreturn msg;",
         "outputs": 1,
         "noerr": 0,
         "initialize": "",
@@ -185,6 +189,214 @@
                 "e84e65fdadd0d582"
             ]
         ]
+    },
+    {
+        "id": "ab56d2d35bcd4f98",
+        "type": "function",
+        "z": "2a2cc906a03e0859",
+        "name": "function 5",
+        "func": "msg.payload = msg.payload.PotAct\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 280,
+        "y": 320,
+        "wires": [
+            [
+                "11a1b4638ab4bb0c"
+            ]
+        ]
+    },
+    {
+        "id": "11a1b4638ab4bb0c",
+        "type": "ui_gauge",
+        "z": "2a2cc906a03e0859",
+        "name": "",
+        "group": "68c6cb8aaaf2749b",
+        "order": 1,
+        "width": 0,
+        "height": 0,
+        "gtype": "gage",
+        "title": "Potencia Activa Global",
+        "label": "kW",
+        "format": "{{value}}",
+        "min": 0,
+        "max": 10,
+        "colors": [
+            "#00b500",
+            "#e6e600",
+            "#ca3838"
+        ],
+        "seg1": "",
+        "seg2": "",
+        "diff": false,
+        "className": "",
+        "x": 560,
+        "y": 320,
+        "wires": []
+    },
+    {
+        "id": "eb6e3eec520f88b2",
+        "type": "function",
+        "z": "2a2cc906a03e0859",
+        "name": "function 6",
+        "func": "msg.payload = msg.payload.PotReact\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 280,
+        "y": 380,
+        "wires": [
+            [
+                "7b82ca3ddaf51903"
+            ]
+        ]
+    },
+    {
+        "id": "7b82ca3ddaf51903",
+        "type": "ui_gauge",
+        "z": "2a2cc906a03e0859",
+        "name": "",
+        "group": "68c6cb8aaaf2749b",
+        "order": 2,
+        "width": 0,
+        "height": 0,
+        "gtype": "gage",
+        "title": "Potencia Reactiva Global",
+        "label": "kVA",
+        "format": "{{value}}",
+        "min": 0,
+        "max": 10,
+        "colors": [
+            "#00b500",
+            "#e6e600",
+            "#ca3838"
+        ],
+        "seg1": "",
+        "seg2": "",
+        "diff": false,
+        "className": "",
+        "x": 570,
+        "y": 380,
+        "wires": []
+    },
+    {
+        "id": "6b8e8548f7c0835c",
+        "type": "function",
+        "z": "2a2cc906a03e0859",
+        "name": "function 7",
+        "func": "msg.payload = msg.payload.Volt\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 280,
+        "y": 440,
+        "wires": [
+            [
+                "a0ae939035a21dbb"
+            ]
+        ]
+    },
+    {
+        "id": "a0ae939035a21dbb",
+        "type": "ui_gauge",
+        "z": "2a2cc906a03e0859",
+        "name": "",
+        "group": "a22be0737c172c50",
+        "order": 1,
+        "width": 0,
+        "height": 0,
+        "gtype": "gage",
+        "title": "Voltaje de la Red",
+        "label": "V",
+        "format": "{{value}}",
+        "min": 0,
+        "max": 10,
+        "colors": [
+            "#00b500",
+            "#e6e600",
+            "#ca3838"
+        ],
+        "seg1": "",
+        "seg2": "",
+        "diff": false,
+        "className": "",
+        "x": 550,
+        "y": 440,
+        "wires": []
+    },
+    {
+        "id": "86b12d01319e577b",
+        "type": "function",
+        "z": "2a2cc906a03e0859",
+        "name": "function 8",
+        "func": "msg.payload = msg.payload.Int\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 280,
+        "y": 520,
+        "wires": [
+            [
+                "2dc95aabdde8f4bf"
+            ]
+        ]
+    },
+    {
+        "id": "2dc95aabdde8f4bf",
+        "type": "ui_gauge",
+        "z": "2a2cc906a03e0859",
+        "name": "",
+        "group": "a22be0737c172c50",
+        "order": 2,
+        "width": 0,
+        "height": 0,
+        "gtype": "gage",
+        "title": "Corriente",
+        "label": "A",
+        "format": "{{value}}",
+        "min": 0,
+        "max": 10,
+        "colors": [
+            "#00b500",
+            "#e6e600",
+            "#ca3838"
+        ],
+        "seg1": "",
+        "seg2": "",
+        "diff": false,
+        "className": "",
+        "x": 520,
+        "y": 520,
+        "wires": []
+    },
+    {
+        "id": "8682f7fb7ba385a7",
+        "type": "ui_spacer",
+        "z": "2a2cc906a03e0859",
+        "name": "spacer",
+        "group": "93b39fa4c6bc5332",
+        "order": 1,
+        "width": 7,
+        "height": 1
+    },
+    {
+        "id": "ecc5020b77b46975",
+        "type": "ui_spacer",
+        "z": "2a2cc906a03e0859",
+        "name": "spacer",
+        "group": "68c6cb8aaaf2749b",
+        "order": 2,
+        "width": 1,
+        "height": 1
     },
     {
         "id": "9637394d2b7e86d8",
@@ -216,16 +428,40 @@
     {
         "id": "93b39fa4c6bc5332",
         "type": "ui_group",
-        "name": "Group 1",
+        "name": "Predicciones del modelo",
         "tab": "6ad2b1bd74a742b0",
         "order": 1,
         "disp": true,
-        "width": 6
+        "width": "7",
+        "collapse": false,
+        "className": ""
+    },
+    {
+        "id": "68c6cb8aaaf2749b",
+        "type": "ui_group",
+        "name": "Variables de potencia global",
+        "tab": "6ad2b1bd74a742b0",
+        "order": 2,
+        "disp": true,
+        "width": "6",
+        "collapse": false,
+        "className": ""
+    },
+    {
+        "id": "a22be0737c172c50",
+        "type": "ui_group",
+        "name": "Variables eléctricas",
+        "tab": "6ad2b1bd74a742b0",
+        "order": 3,
+        "disp": true,
+        "width": "6",
+        "collapse": false,
+        "className": ""
     },
     {
         "id": "6ad2b1bd74a742b0",
         "type": "ui_tab",
-        "name": "Tab 1",
+        "name": "Tablero de monitoreo del modelo y variables",
         "icon": "dashboard",
         "order": 1,
         "disabled": false,
