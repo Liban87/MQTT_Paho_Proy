@@ -24,15 +24,15 @@ def send_dataframe_rows_broker(broker_address, port, topic, file_path, model_pat
     client.connect(broker_address,port)
 
     # Iterar sobre las filas del DataFrame
-    d = {0:'Sin Consumo', 1:'Zona 2', 2:'Zona 3', 3:'Igual' }
+    d = {0:'No Consumption', 1:'Sub metering 2', 2:'Sub metering 3', 3:'Equal' }
   
     for _, row in df.iterrows():
         # Obtener las características de la fila como una matriz NumPy
         features = pd.DataFrame(row.values.reshape(1, -1), columns = df.columns.tolist())
         # Realizar la predicción con el modelo cargado
         prediction = model.predict(features)
-        ind = np.argmax(prediction)
-        prediction = d[ind]        
+        
+        prediction = d[int(prediction)]        
         probability = model.predict_proba(features)[0] #.max()
 
         # Crear un diccionario con los resultados
